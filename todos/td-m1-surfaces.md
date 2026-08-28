@@ -1,10 +1,12 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M1-SURFACES: Desktop surface and application model
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
-Introduce the smallest useful surface lifecycle and render contract, with one simple built-in surface and no stable plugin ABI.
+Establish txtDesk desktop chrome and surface registration using Textual primitives, with no stable plugin API or speculative base-class hierarchy.
 
 ## State
 - Lifecycle: `planned`
@@ -16,9 +18,7 @@ Introduce the smallest useful surface lifecycle and render contract, with one si
 _None._
 
 ## Ownership
-- `exclusive`: `apps`
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `src/txtdesk`
 - `exclusive`: `tests`
 
 ## Dependencies

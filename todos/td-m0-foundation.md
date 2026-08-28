@@ -1,10 +1,12 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M0-FOUNDATION: Repository foundation
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
-Establish identity, documentation, agent guidance, build skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.
+Establish identity, documentation, agent guidance, a Python package skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.
 
 ## State
 - Lifecycle: `done`
@@ -19,12 +21,10 @@ _None._
 - `exclusive`: `.gitignore`
 - `exclusive`: `.todo-orchestrator`
 - `exclusive`: `AGENTS.md`
-- `exclusive`: `CMakeLists.txt`
 - `exclusive`: `README.md`
-- `exclusive`: `apps`
 - `exclusive`: `docs`
-- `exclusive`: `include`
-- `exclusive`: `src/main.cc`
+- `exclusive`: `pyproject.toml`
+- `exclusive`: `src/txtdesk`
 - `exclusive`: `tests`
 
 ## Dependencies

@@ -1,7 +1,9 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M4-TELEMETRY: Telemetry applications/providers
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
 Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.
@@ -9,19 +11,18 @@ Present GPU, CPU, network, and storage telemetry through replaceable providers w
 ## State
 - Lifecycle: `planned`
 - Execution: `ready`
-- Parallel policy: `serial`
+- Parallel policy: `parallel_safe`
 - Result: `-`
 
 ## Next Action
 _None._
 
 ## Ownership
-- `exclusive`: `apps`
 - `exclusive`: `docs`
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `src/txtdesk/providers/telemetry`
+- `exclusive`: `src/txtdesk/surfaces/telemetry`
 - `exclusive`: `tests`
 
 ## Dependencies
-- `task`: `TD-M4-CODEX`
+- `task`: `TD-M2-BASIC-APPS`
 <!-- todo-orchestrator:v2-managed:end -->

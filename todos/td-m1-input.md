@@ -1,7 +1,9 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M1-INPUT: Input and command handling
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
 Add basic keyboard dispatch and global commands without coupling input events to application-specific semantics.
@@ -16,8 +18,7 @@ Add basic keyboard dispatch and global commands without coupling input events to
 _None._
 
 ## Ownership
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `src/txtdesk`
 - `exclusive`: `tests`
 
 ## Dependencies

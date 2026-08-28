@@ -6,18 +6,25 @@ txtDesk is a portable terminal desktop for Unix-like systems, including use
 over SSH. Core desktop abstractions must never become coupled to the user's
 current iMac, server topology, or deployment policy.
 
-Keep a firm distinction between the generic desktop framework and the
-applications/providers that run on it. The core owns terminal lifecycle,
-rendering, input, focus, layout, commands, configuration, and surface
-lifecycle. Project Control, Codex, telemetry, remote control, and machine
+Keep a firm distinction between generic txtDesk behavior and the applications,
+providers, and deployment profiles assembled around it. txtDesk core owns
+application lifecycle, global commands, focus policy, desktop composition,
+shared configuration and state where necessary, common chrome, and surface
+registration. Project Control, Codex, telemetry, remote control, and machine
 profiles are edge integrations.
 
 ## Engineering bias
 
 Keep the core small, unsurprising, dependency-light, and Unix-friendly. Prefer
-simple interfaces, obvious ownership, RAII, reliable terminal restoration,
-testable non-rendering logic, minimal global state, native Unix facilities
-where appropriate, and extensions at the application/provider boundary.
+simple Python, obvious ownership and state, reliable cleanup, testable logic,
+minimal global state, native Unix facilities where appropriate, and extensions
+at the application/provider boundary.
+
+Python 3.12+ is the default. Textual is the current preferred TUI foundation:
+use its application, widget, layout, focus, input, and async facilities rather
+than building a second framework underneath it. Do not wrap every Textual
+concept speculatively. Native code or extensions must earn their existence
+through a demonstrated low-level or performance requirement.
 
 Agents must not:
 
@@ -27,6 +34,7 @@ Agents must not:
 - create a stable plugin ABI before multiple real applications require one;
 - introduce a daemon architecture without demonstrated need;
 - build large class hierarchies for theoretical future use;
+- build a custom widget, layout, or event framework under Textual;
 - replace ordinary Unix conventions with fashionable abstractions without
   cause;
 - depend on GUI frameworks for the base interface; or
@@ -34,11 +42,12 @@ Agents must not:
 
 ## Workflow and current phase
 
-The project is in bootstrap/foundation mode. Before selecting work, use the
-installed `coding-workflow` front door and inspect the authoritative
-todo-orchestrator state. Do not freelance around that workflow, manually edit
-its SQLite database or generated projections, create competing TODO ledgers,
-or claim future work unnecessarily.
+The project is in bootstrap/foundation mode. The currently installed canonical
+front door is `coding-workflow`; todo-orchestrator is its authoritative
+SQLite-backed kernel. Before selecting work, use that front door and inspect
+the live Project Control/todo state. Do not freelance around it, manually edit
+its database or generated projections, create competing TODO ledgers, or claim
+future work unnecessarily.
 
 Read `docs/scope.md` and `docs/architecture.md` before changing boundaries.
 Treat the roadmap as a current sequence, not a frozen design. Do not continue

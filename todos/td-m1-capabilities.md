@@ -1,10 +1,12 @@
-<!-- todo-orchestrator:v2-managed:start -->
-# TD-M1-CAPABILITIES: Terminal capability and restoration validation
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+
+<!-- todo-orchestrator:v2-managed:start -->
+# TD-M1-CAPABILITIES: Textual shell and terminal compatibility validation
+
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
-Validate startup, graceful degradation, resize, shutdown, and restoration across representative TERM configurations and SSH-like sessions.
+Validate package entry points, Textual startup, resize, shutdown, failure cleanup, graceful degradation, representative TERM configurations, and SSH-like sessions.
 
 ## State
 - Lifecycle: `planned`
@@ -17,8 +19,8 @@ _None._
 
 ## Ownership
 - `read`: `docs`
-- `read`: `include/txtdesk`
-- `read`: `src`
+- `read`: `pyproject.toml`
+- `read`: `src/txtdesk`
 - `read`: `tests`
 
 ## Dependencies

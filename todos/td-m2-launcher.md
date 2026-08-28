@@ -1,7 +1,9 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M2-LAUNCHER: Command palette and application launcher
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
 Provide a coherent launcher or command palette for built-in applications and desktop commands.
@@ -9,16 +11,14 @@ Provide a coherent launcher or command palette for built-in applications and des
 ## State
 - Lifecycle: `planned`
 - Execution: `ready`
-- Parallel policy: `serial`
+- Parallel policy: `parallel_safe`
 - Result: `-`
 
 ## Next Action
 _None._
 
 ## Ownership
-- `exclusive`: `apps`
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `src/txtdesk/surfaces`
 - `exclusive`: `tests`
 
 ## Dependencies

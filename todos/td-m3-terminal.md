@@ -1,10 +1,12 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M3-TERMINAL: Embedded terminal application and VT engine integration
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
-Deliberately select and integrate a mature VT state engine with PTY ownership, resize propagation, interactive shells, and multiple terminal panes.
+Evaluate and integrate a mature Python-accessible terminal-state engine or contained native binding with PTY lifecycle, screen buffers, rendering, input forwarding, resize propagation, and interactive shells.
 
 ## State
 - Lifecycle: `planned`
@@ -16,11 +18,10 @@ Deliberately select and integrate a mature VT state engine with PTY ownership, r
 _None._
 
 ## Ownership
-- `exclusive`: `CMakeLists.txt`
-- `exclusive`: `apps`
 - `exclusive`: `docs`
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `pyproject.toml`
+- `exclusive`: `src/txtdesk/providers`
+- `exclusive`: `src/txtdesk/surfaces`
 - `exclusive`: `tests`
 
 ## Dependencies

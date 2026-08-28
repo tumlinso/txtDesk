@@ -1,7 +1,9 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M5-HOST-CONTROL: Host-specific deployment and control applications
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
 Build optional edge applications and profiles for the iMac, server power, IPMI, IoT mains, Tailscale-aware management, and other deployment-specific needs.
@@ -16,10 +18,13 @@ Build optional edge applications and profiles for the iMac, server power, IPMI, 
 _None._
 
 ## Ownership
-- `exclusive`: `apps`
 - `exclusive`: `docs`
+- `exclusive`: `src/txtdesk/profiles`
+- `exclusive`: `src/txtdesk/providers/control`
 - `exclusive`: `tests`
 
 ## Dependencies
+- `task`: `TD-M4-PROJECT-CONTROL`
+- `task`: `TD-M4-CODEX`
 - `task`: `TD-M4-TELEMETRY`
 <!-- todo-orchestrator:v2-managed:end -->

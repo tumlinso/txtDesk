@@ -1,10 +1,12 @@
-<!-- todo-orchestrator:v2-managed:start -->
-# TD-M1-RUNTIME: Minimal terminal/runtime shell
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+
+<!-- todo-orchestrator:v2-managed:start -->
+# TD-M1-RUNTIME: Minimal Textual application shell
+
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
-Implement terminal initialization and RAII restoration, capability-aware screen setup, resize handling, an event loop, and minimal desktop chrome.
+Build the smallest real txtDesk composition above Textual with clean startup and exit, resize behavior, minimal chrome, global commands, and one simple surface.
 
 ## State
 - Lifecycle: `planned`
@@ -13,12 +15,11 @@ Implement terminal initialization and RAII restoration, capability-aware screen 
 - Result: `-`
 
 ## Next Action
-Select the lightweight terminal substrate and implement the smallest safely restoring runtime shell; do not add embedded terminal panes.
+Implement the smallest Textual-based desktop composition; do not add embedded terminal panes or a framework beneath Textual.
 
 ## Ownership
-- `exclusive`: `CMakeLists.txt`
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `pyproject.toml`
+- `exclusive`: `src/txtdesk`
 - `exclusive`: `tests`
 
 ## Dependencies

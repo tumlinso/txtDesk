@@ -1,7 +1,9 @@
+
+
 <!-- todo-orchestrator:v2-managed:start -->
 # TD-M4-CODEX: Codex application/provider
 
-Task revision: `2`; current project revision is in `todo-status.md`.
+Task revision: `4`; current project revision is in `todo-status.md`.
 
 ## Objective
 Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.
@@ -9,19 +11,18 @@ Add Codex interaction as an application/provider using demonstrated integration 
 ## State
 - Lifecycle: `planned`
 - Execution: `ready`
-- Parallel policy: `serial`
+- Parallel policy: `parallel_safe`
 - Result: `-`
 
 ## Next Action
 _None._
 
 ## Ownership
-- `exclusive`: `apps`
 - `exclusive`: `docs`
-- `exclusive`: `include/txtdesk`
-- `exclusive`: `src`
+- `exclusive`: `src/txtdesk/providers/codex`
+- `exclusive`: `src/txtdesk/surfaces/codex`
 - `exclusive`: `tests`
 
 ## Dependencies
-- `task`: `TD-M4-PROJECT-CONTROL`
+- `task`: `TD-M2-BASIC-APPS`
 <!-- todo-orchestrator:v2-managed:end -->

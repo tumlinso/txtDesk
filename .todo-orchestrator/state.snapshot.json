@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-28T08:10:30Z",
+  "generated_at": "2026-08-28T08:25:36Z",
   "project": {
     "configuration": {
       "busy_timeout_ms": 5000,
@@ -18,7 +18,7 @@
     "project_uuid": "8d69566b-9fef-41e2-bbeb-d8bc39c28821",
     "schema_version": 2
   },
-  "project_revision": 2,
+  "project_revision": 4,
   "schema_version": 2,
   "snapshot_version": 3,
   "tables": {
@@ -31,26 +31,42 @@
       {
         "allowed_json": "[\"portable-host-agnostic-terminal-desktop\"]",
         "id": "core-identity",
-        "revision": 2,
+        "revision": 4,
         "title": "Core identity",
-        "updated_at": "2026-08-28T08:10:30Z",
+        "updated_at": "2026-08-28T08:25:36Z",
         "value_json": "\"portable-host-agnostic-terminal-desktop\""
+      },
+      {
+        "allowed_json": "[\"python-3.12-plus\"]",
+        "id": "default-language",
+        "revision": 4,
+        "title": "Default implementation language",
+        "updated_at": "2026-08-28T08:25:36Z",
+        "value_json": "\"python-3.12-plus\""
       },
       {
         "allowed_json": "[\"evaluate-mature-vt-engine-before-embedding\"]",
         "id": "embedded-terminal-strategy",
-        "revision": 2,
+        "revision": 4,
         "title": "Embedded terminal strategy",
-        "updated_at": "2026-08-28T08:10:30Z",
+        "updated_at": "2026-08-28T08:25:36Z",
         "value_json": "\"evaluate-mature-vt-engine-before-embedding\""
       },
       {
         "allowed_json": "[\"deferred-until-real-applications\"]",
         "id": "plugin-abi-timing",
-        "revision": 2,
+        "revision": 4,
         "title": "Plugin ABI timing",
-        "updated_at": "2026-08-28T08:10:30Z",
+        "updated_at": "2026-08-28T08:25:36Z",
         "value_json": "\"deferred-until-real-applications\""
+      },
+      {
+        "allowed_json": "[\"textual-preferred-no-parallel-framework\"]",
+        "id": "tui-foundation",
+        "revision": 4,
+        "title": "Current TUI foundation",
+        "updated_at": "2026-08-28T08:25:36Z",
+        "value_json": "\"textual-preferred-no-parallel-framework\""
       }
     ],
     "events": [
@@ -73,6 +89,26 @@
         "revision": 2,
         "seq": 2,
         "timestamp": "2026-08-28T08:10:30Z"
+      },
+      {
+        "actor_session_id": null,
+        "entity_id": "8d69566b-9fef-41e2-bbeb-d8bc39c28821",
+        "entity_type": "project",
+        "event_type": "plan.applied",
+        "payload_json": "{\"file\": \"/home/tumlinson/txtDesk/.todo-orchestrator/txtdesk-foundation-plan.json\"}",
+        "revision": 3,
+        "seq": 3,
+        "timestamp": "2026-08-28T08:25:07Z"
+      },
+      {
+        "actor_session_id": null,
+        "entity_id": "8d69566b-9fef-41e2-bbeb-d8bc39c28821",
+        "entity_type": "project",
+        "event_type": "plan.applied",
+        "payload_json": "{\"file\": \"/home/tumlinson/txtDesk/.todo-orchestrator/txtdesk-foundation-plan.json\"}",
+        "revision": 4,
+        "seq": 4,
+        "timestamp": "2026-08-28T08:25:36Z"
       }
     ],
     "evidence": [],
@@ -104,6 +140,13 @@
       },
       {
         "enforcement": null,
+        "id": "python-default",
+        "rule": "Python 3.12 or newer is the default implementation substrate; native extensions require a demonstrated low-level or performance need.",
+        "scope_json": "{}",
+        "severity": "error"
+      },
+      {
+        "enforcement": null,
         "id": "real-terminal-emulation",
         "rule": "An embedded interactive pane requires a mature VT terminal-state engine; a PTY alone is not an embedded terminal and txtDesk does not invent a fake emulator.",
         "scope_json": "{}",
@@ -113,6 +156,13 @@
         "enforcement": null,
         "id": "terminal-restoration",
         "rule": "Terminal initialization has explicit ownership and restoration on normal and handled-error exits; terminal corruption is a serious defect.",
+        "scope_json": "{}",
+        "severity": "error"
+      },
+      {
+        "enforcement": null,
+        "id": "use-textual-primitives",
+        "rule": "Use Textual as the current TUI foundation and do not build a redundant widget, layout, focus, or event framework underneath it.",
         "scope_json": "{}",
         "severity": "error"
       }
@@ -138,32 +188,22 @@
       },
       {
         "mode": "exclusive",
-        "path": "CMakeLists.txt",
-        "task_id": "TD-M0-FOUNDATION"
-      },
-      {
-        "mode": "exclusive",
         "path": "README.md",
         "task_id": "TD-M0-FOUNDATION"
       },
       {
         "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M0-FOUNDATION"
-      },
-      {
-        "mode": "exclusive",
         "path": "docs",
         "task_id": "TD-M0-FOUNDATION"
       },
       {
         "mode": "exclusive",
-        "path": "include",
+        "path": "pyproject.toml",
         "task_id": "TD-M0-FOUNDATION"
       },
       {
         "mode": "exclusive",
-        "path": "src/main.cc",
+        "path": "src/txtdesk",
         "task_id": "TD-M0-FOUNDATION"
       },
       {
@@ -178,12 +218,12 @@
       },
       {
         "mode": "read",
-        "path": "include/txtdesk",
+        "path": "pyproject.toml",
         "task_id": "TD-M1-CAPABILITIES"
       },
       {
         "mode": "read",
-        "path": "src",
+        "path": "src/txtdesk",
         "task_id": "TD-M1-CAPABILITIES"
       },
       {
@@ -193,12 +233,7 @@
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M1-INPUT"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk",
         "task_id": "TD-M1-INPUT"
       },
       {
@@ -208,17 +243,12 @@
       },
       {
         "mode": "exclusive",
-        "path": "CMakeLists.txt",
+        "path": "pyproject.toml",
         "task_id": "TD-M1-RUNTIME"
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M1-RUNTIME"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk",
         "task_id": "TD-M1-RUNTIME"
       },
       {
@@ -228,17 +258,7 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M1-SURFACES"
-      },
-      {
-        "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M1-SURFACES"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk",
         "task_id": "TD-M1-SURFACES"
       },
       {
@@ -248,17 +268,12 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
+        "path": "src/txtdesk/providers",
         "task_id": "TD-M2-BASIC-APPS"
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M2-BASIC-APPS"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/surfaces",
         "task_id": "TD-M2-BASIC-APPS"
       },
       {
@@ -273,12 +288,7 @@
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M2-CONFIG"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/core",
         "task_id": "TD-M2-CONFIG"
       },
       {
@@ -288,17 +298,7 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M2-LAUNCHER"
-      },
-      {
-        "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M2-LAUNCHER"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/surfaces",
         "task_id": "TD-M2-LAUNCHER"
       },
       {
@@ -308,12 +308,7 @@
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
-        "task_id": "TD-M2-LAYOUT"
-      },
-      {
-        "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/core",
         "task_id": "TD-M2-LAYOUT"
       },
       {
@@ -323,27 +318,22 @@
       },
       {
         "mode": "exclusive",
-        "path": "CMakeLists.txt",
-        "task_id": "TD-M3-TERMINAL"
-      },
-      {
-        "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M3-TERMINAL"
-      },
-      {
-        "mode": "exclusive",
         "path": "docs",
         "task_id": "TD-M3-TERMINAL"
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
+        "path": "pyproject.toml",
         "task_id": "TD-M3-TERMINAL"
       },
       {
         "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/providers",
+        "task_id": "TD-M3-TERMINAL"
+      },
+      {
+        "mode": "exclusive",
+        "path": "src/txtdesk/surfaces",
         "task_id": "TD-M3-TERMINAL"
       },
       {
@@ -353,22 +343,17 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M4-CODEX"
-      },
-      {
-        "mode": "exclusive",
         "path": "docs",
         "task_id": "TD-M4-CODEX"
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
+        "path": "src/txtdesk/providers/codex",
         "task_id": "TD-M4-CODEX"
       },
       {
         "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/surfaces/codex",
         "task_id": "TD-M4-CODEX"
       },
       {
@@ -378,22 +363,17 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M4-PROJECT-CONTROL"
-      },
-      {
-        "mode": "exclusive",
         "path": "docs",
         "task_id": "TD-M4-PROJECT-CONTROL"
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
+        "path": "src/txtdesk/providers/project_control",
         "task_id": "TD-M4-PROJECT-CONTROL"
       },
       {
         "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/surfaces/project_control",
         "task_id": "TD-M4-PROJECT-CONTROL"
       },
       {
@@ -403,22 +383,17 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
-        "task_id": "TD-M4-TELEMETRY"
-      },
-      {
-        "mode": "exclusive",
         "path": "docs",
         "task_id": "TD-M4-TELEMETRY"
       },
       {
         "mode": "exclusive",
-        "path": "include/txtdesk",
+        "path": "src/txtdesk/providers/telemetry",
         "task_id": "TD-M4-TELEMETRY"
       },
       {
         "mode": "exclusive",
-        "path": "src",
+        "path": "src/txtdesk/surfaces/telemetry",
         "task_id": "TD-M4-TELEMETRY"
       },
       {
@@ -428,12 +403,17 @@
       },
       {
         "mode": "exclusive",
-        "path": "apps",
+        "path": "docs",
         "task_id": "TD-M5-HOST-CONTROL"
       },
       {
         "mode": "exclusive",
-        "path": "docs",
+        "path": "src/txtdesk/profiles",
+        "task_id": "TD-M5-HOST-CONTROL"
+      },
+      {
+        "mode": "exclusive",
+        "path": "src/txtdesk/providers/control",
         "task_id": "TD-M5-HOST-CONTROL"
       },
       {
@@ -448,17 +428,7 @@
       },
       {
         "mode": "read",
-        "path": "CMakeLists.txt",
-        "task_id": "TD-VALIDATION-DOCS"
-      },
-      {
-        "mode": "read",
         "path": "README.md",
-        "task_id": "TD-VALIDATION-DOCS"
-      },
-      {
-        "mode": "read",
-        "path": "apps",
         "task_id": "TD-VALIDATION-DOCS"
       },
       {
@@ -468,12 +438,12 @@
       },
       {
         "mode": "read",
-        "path": "include/txtdesk",
+        "path": "pyproject.toml",
         "task_id": "TD-VALIDATION-DOCS"
       },
       {
         "mode": "read",
-        "path": "src",
+        "path": "src/txtdesk",
         "task_id": "TD-VALIDATION-DOCS"
       },
       {
@@ -493,7 +463,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 1,
+        "id": 33,
         "interface_id": null,
         "prerequisite_task_id": "TD-M1-INPUT",
         "task_id": "TD-M1-CAPABILITIES",
@@ -504,7 +474,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 2,
+        "id": 34,
         "interface_id": null,
         "prerequisite_task_id": "TD-M1-SURFACES",
         "task_id": "TD-M1-INPUT",
@@ -515,7 +485,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 3,
+        "id": 35,
         "interface_id": null,
         "prerequisite_task_id": "TD-M0-FOUNDATION",
         "task_id": "TD-M1-RUNTIME",
@@ -526,7 +496,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 4,
+        "id": 36,
         "interface_id": null,
         "prerequisite_task_id": "TD-M1-RUNTIME",
         "task_id": "TD-M1-SURFACES",
@@ -537,7 +507,18 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 5,
+        "id": 37,
+        "interface_id": null,
+        "prerequisite_task_id": "TD-M2-LAUNCHER",
+        "task_id": "TD-M2-BASIC-APPS",
+        "type": "task"
+      },
+      {
+        "barrier_id": null,
+        "checkpoint_id": null,
+        "condition_json": "{}",
+        "decision_id": null,
+        "id": 38,
         "interface_id": null,
         "prerequisite_task_id": "TD-M2-CONFIG",
         "task_id": "TD-M2-BASIC-APPS",
@@ -548,9 +529,9 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 6,
+        "id": 39,
         "interface_id": null,
-        "prerequisite_task_id": "TD-M2-LAUNCHER",
+        "prerequisite_task_id": "TD-M2-LAYOUT",
         "task_id": "TD-M2-CONFIG",
         "type": "task"
       },
@@ -559,7 +540,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 7,
+        "id": 40,
         "interface_id": null,
         "prerequisite_task_id": "TD-M2-LAYOUT",
         "task_id": "TD-M2-LAUNCHER",
@@ -570,7 +551,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 8,
+        "id": 41,
         "interface_id": null,
         "prerequisite_task_id": "TD-M1-CAPABILITIES",
         "task_id": "TD-M2-LAYOUT",
@@ -581,7 +562,7 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 9,
+        "id": 42,
         "interface_id": null,
         "prerequisite_task_id": "TD-M2-BASIC-APPS",
         "task_id": "TD-M3-TERMINAL",
@@ -592,9 +573,9 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 10,
+        "id": 43,
         "interface_id": null,
-        "prerequisite_task_id": "TD-M4-PROJECT-CONTROL",
+        "prerequisite_task_id": "TD-M2-BASIC-APPS",
         "task_id": "TD-M4-CODEX",
         "type": "task"
       },
@@ -603,9 +584,9 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 11,
+        "id": 44,
         "interface_id": null,
-        "prerequisite_task_id": "TD-M3-TERMINAL",
+        "prerequisite_task_id": "TD-M2-BASIC-APPS",
         "task_id": "TD-M4-PROJECT-CONTROL",
         "type": "task"
       },
@@ -614,9 +595,9 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 12,
+        "id": 45,
         "interface_id": null,
-        "prerequisite_task_id": "TD-M4-CODEX",
+        "prerequisite_task_id": "TD-M2-BASIC-APPS",
         "task_id": "TD-M4-TELEMETRY",
         "type": "task"
       },
@@ -625,7 +606,29 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 13,
+        "id": 46,
+        "interface_id": null,
+        "prerequisite_task_id": "TD-M4-PROJECT-CONTROL",
+        "task_id": "TD-M5-HOST-CONTROL",
+        "type": "task"
+      },
+      {
+        "barrier_id": null,
+        "checkpoint_id": null,
+        "condition_json": "{}",
+        "decision_id": null,
+        "id": 47,
+        "interface_id": null,
+        "prerequisite_task_id": "TD-M4-CODEX",
+        "task_id": "TD-M5-HOST-CONTROL",
+        "type": "task"
+      },
+      {
+        "barrier_id": null,
+        "checkpoint_id": null,
+        "condition_json": "{}",
+        "decision_id": null,
+        "id": 48,
         "interface_id": null,
         "prerequisite_task_id": "TD-M4-TELEMETRY",
         "task_id": "TD-M5-HOST-CONTROL",
@@ -636,7 +639,18 @@
         "checkpoint_id": null,
         "condition_json": "{}",
         "decision_id": null,
-        "id": 14,
+        "id": 49,
+        "interface_id": null,
+        "prerequisite_task_id": "TD-M3-TERMINAL",
+        "task_id": "TD-VALIDATION-DOCS",
+        "type": "task"
+      },
+      {
+        "barrier_id": null,
+        "checkpoint_id": null,
+        "condition_json": "{}",
+        "decision_id": null,
+        "id": 50,
         "interface_id": null,
         "prerequisite_task_id": "TD-M5-HOST-CONTROL",
         "task_id": "TD-VALIDATION-DOCS",
@@ -657,11 +671,19 @@
         "task_id": "TD-00"
       },
       {
+        "invariant_id": "python-default",
+        "task_id": "TD-00"
+      },
+      {
         "invariant_id": "real-terminal-emulation",
         "task_id": "TD-00"
       },
       {
         "invariant_id": "terminal-restoration",
+        "task_id": "TD-00"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
         "task_id": "TD-00"
       },
       {
@@ -677,11 +699,27 @@
         "task_id": "TD-M0-FOUNDATION"
       },
       {
+        "invariant_id": "python-default",
+        "task_id": "TD-M0-FOUNDATION"
+      },
+      {
         "invariant_id": "real-terminal-emulation",
         "task_id": "TD-M0-FOUNDATION"
       },
       {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M0-FOUNDATION"
+      },
+      {
+        "invariant_id": "python-default",
+        "task_id": "TD-M1-CAPABILITIES"
+      },
+      {
         "invariant_id": "terminal-restoration",
+        "task_id": "TD-M1-CAPABILITIES"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
         "task_id": "TD-M1-CAPABILITIES"
       },
       {
@@ -689,7 +727,19 @@
         "task_id": "TD-M1-INPUT"
       },
       {
+        "invariant_id": "python-default",
+        "task_id": "TD-M1-INPUT"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M1-INPUT"
+      },
+      {
         "invariant_id": "host-agnostic-core",
+        "task_id": "TD-M1-RUNTIME"
+      },
+      {
+        "invariant_id": "python-default",
         "task_id": "TD-M1-RUNTIME"
       },
       {
@@ -697,6 +747,10 @@
         "task_id": "TD-M1-RUNTIME"
       },
       {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M1-RUNTIME"
+      },
+      {
         "invariant_id": "applications-own-integrations",
         "task_id": "TD-M1-SURFACES"
       },
@@ -709,6 +763,14 @@
         "task_id": "TD-M1-SURFACES"
       },
       {
+        "invariant_id": "python-default",
+        "task_id": "TD-M1-SURFACES"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M1-SURFACES"
+      },
+      {
         "invariant_id": "applications-own-integrations",
         "task_id": "TD-M2-BASIC-APPS"
       },
@@ -717,7 +779,19 @@
         "task_id": "TD-M2-BASIC-APPS"
       },
       {
+        "invariant_id": "python-default",
+        "task_id": "TD-M2-BASIC-APPS"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M2-BASIC-APPS"
+      },
+      {
         "invariant_id": "host-agnostic-core",
+        "task_id": "TD-M2-CONFIG"
+      },
+      {
+        "invariant_id": "python-default",
         "task_id": "TD-M2-CONFIG"
       },
       {
@@ -729,11 +803,23 @@
         "task_id": "TD-M2-LAUNCHER"
       },
       {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M2-LAUNCHER"
+      },
+      {
         "invariant_id": "host-agnostic-core",
         "task_id": "TD-M2-LAYOUT"
       },
       {
+        "invariant_id": "use-textual-primitives",
+        "task_id": "TD-M2-LAYOUT"
+      },
+      {
         "invariant_id": "applications-own-integrations",
+        "task_id": "TD-M3-TERMINAL"
+      },
+      {
+        "invariant_id": "python-default",
         "task_id": "TD-M3-TERMINAL"
       },
       {
@@ -742,6 +828,10 @@
       },
       {
         "invariant_id": "terminal-restoration",
+        "task_id": "TD-M3-TERMINAL"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
         "task_id": "TD-M3-TERMINAL"
       },
       {
@@ -789,11 +879,19 @@
         "task_id": "TD-VALIDATION-DOCS"
       },
       {
+        "invariant_id": "python-default",
+        "task_id": "TD-VALIDATION-DOCS"
+      },
+      {
         "invariant_id": "real-terminal-emulation",
         "task_id": "TD-VALIDATION-DOCS"
       },
       {
         "invariant_id": "terminal-restoration",
+        "task_id": "TD-VALIDATION-DOCS"
+      },
+      {
+        "invariant_id": "use-textual-primitives",
         "task_id": "TD-VALIDATION-DOCS"
       }
     ],
@@ -817,12 +915,12 @@
         "priority": 100,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "txtDesk portable terminal desktop",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -835,19 +933,19 @@
         "legacy_owner": null,
         "legacy_payload_json": "{}",
         "next_action": "",
-        "notes": "Completed by the bounded bootstrap pass. The executable remains a placeholder and no M1 runtime behavior is implemented.",
-        "objective": "Establish identity, documentation, agent guidance, build skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.",
+        "notes": "Completed by the bounded bootstrap and corrective Python-foundation pass. The console entry point remains a placeholder and no M1 desktop behavior is implemented.",
+        "objective": "Establish identity, documentation, agent guidance, a Python package skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.",
         "parallel_policy": "project_exclusive",
         "parent_id": "TD-00",
         "priority": 99,
         "result": "validated",
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "done",
         "tags_json": "[]",
         "title": "Repository foundation",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -861,18 +959,18 @@
         "legacy_payload_json": "{}",
         "next_action": "",
         "notes": "",
-        "objective": "Validate startup, graceful degradation, resize, shutdown, and restoration across representative TERM configurations and SSH-like sessions.",
+        "objective": "Validate package entry points, Textual startup, resize, shutdown, failure cleanup, graceful degradation, representative TERM configurations, and SSH-like sessions.",
         "parallel_policy": "serial",
         "parent_id": "TD-00",
         "priority": 87,
         "result": null,
         "result_policy_json": "{\"allowed_dispositions\": [\"validated\", \"failed\"]}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
-        "title": "Terminal capability and restoration validation",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "title": "Textual shell and terminal compatibility validation",
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -892,12 +990,12 @@
         "priority": 88,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Input and command handling",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -909,20 +1007,20 @@
         "kind": "workstream",
         "legacy_owner": null,
         "legacy_payload_json": "{}",
-        "next_action": "Select the lightweight terminal substrate and implement the smallest safely restoring runtime shell; do not add embedded terminal panes.",
+        "next_action": "Implement the smallest Textual-based desktop composition; do not add embedded terminal panes or a framework beneath Textual.",
         "notes": "",
-        "objective": "Implement terminal initialization and RAII restoration, capability-aware screen setup, resize handling, an event loop, and minimal desktop chrome.",
+        "objective": "Build the smallest real txtDesk composition above Textual with clean startup and exit, resize behavior, minimal chrome, global commands, and one simple surface.",
         "parallel_policy": "serial",
         "parent_id": "TD-00",
         "priority": 90,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
-        "title": "Minimal terminal/runtime shell",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "title": "Minimal Textual application shell",
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -936,18 +1034,18 @@
         "legacy_payload_json": "{}",
         "next_action": "",
         "notes": "",
-        "objective": "Introduce the smallest useful surface lifecycle and render contract, with one simple built-in surface and no stable plugin ABI.",
+        "objective": "Establish txtDesk desktop chrome and surface registration using Textual primitives, with no stable plugin API or speculative base-class hierarchy.",
         "parallel_policy": "serial",
         "parent_id": "TD-00",
         "priority": 89,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Desktop surface and application model",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -961,18 +1059,18 @@
         "legacy_payload_json": "{}",
         "next_action": "",
         "notes": "",
-        "objective": "Build small native applications that exercise the surface model without embedding host-specific collection policy in the core.",
+        "objective": "Build small filesystem, process, and status surfaces that exercise composition without embedding host-specific collection policy in the core.",
         "parallel_policy": "serial",
         "parent_id": "TD-00",
         "priority": 77,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Basic filesystem, process, and status applications",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -987,17 +1085,17 @@
         "next_action": "",
         "notes": "",
         "objective": "Add portable configuration and keybinding behavior based on actual desktop command needs.",
-        "parallel_policy": "serial",
+        "parallel_policy": "parallel_safe",
         "parent_id": "TD-00",
         "priority": 78,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Configuration and keybindings",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1012,17 +1110,17 @@
         "next_action": "",
         "notes": "",
         "objective": "Provide a coherent launcher or command palette for built-in applications and desktop commands.",
-        "parallel_policy": "serial",
+        "parallel_policy": "parallel_safe",
         "parent_id": "TD-00",
         "priority": 79,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Command palette and application launcher",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1037,17 +1135,17 @@
         "next_action": "",
         "notes": "",
         "objective": "Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.",
-        "parallel_policy": "serial",
+        "parallel_policy": "parallel_safe",
         "parent_id": "TD-00",
         "priority": 80,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Layout and focus composition",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1061,18 +1159,18 @@
         "legacy_payload_json": "{}",
         "next_action": "",
         "notes": "",
-        "objective": "Deliberately select and integrate a mature VT state engine with PTY ownership, resize propagation, interactive shells, and multiple terminal panes.",
+        "objective": "Evaluate and integrate a mature Python-accessible terminal-state engine or contained native binding with PTY lifecycle, screen buffers, rendering, input forwarding, resize propagation, and interactive shells.",
         "parallel_policy": "serial",
         "parent_id": "TD-00",
         "priority": 70,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Embedded terminal application and VT engine integration",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1087,17 +1185,17 @@
         "next_action": "",
         "notes": "",
         "objective": "Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.",
-        "parallel_policy": "serial",
+        "parallel_policy": "parallel_safe",
         "parent_id": "TD-00",
         "priority": 59,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Codex application/provider",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1112,17 +1210,17 @@
         "next_action": "",
         "notes": "",
         "objective": "Expose Project Control through an application and provider without transferring Project Control semantics into the desktop core.",
-        "parallel_policy": "serial",
+        "parallel_policy": "parallel_safe",
         "parent_id": "TD-00",
         "priority": 60,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Project Control application/provider",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1137,17 +1235,17 @@
         "next_action": "",
         "notes": "",
         "objective": "Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.",
-        "parallel_policy": "serial",
+        "parallel_policy": "parallel_safe",
         "parent_id": "TD-00",
         "priority": 58,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Telemetry applications/providers",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1167,12 +1265,12 @@
         "priority": 50,
         "result": null,
         "result_policy_json": "{}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Host-specific deployment and control applications",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       },
       {
         "attention_reason": null,
@@ -1186,18 +1284,18 @@
         "legacy_payload_json": "{}",
         "next_action": "",
         "notes": "",
-        "objective": "Validate architecture boundaries, portability, terminal safety, tests, and user/developer documentation across the delivered project.",
+        "objective": "Validate unit tests, packaging and entry points, TUI smoke behavior, SSH and terminal compatibility, architecture boundaries, and user/developer documentation across the delivered project.",
         "parallel_policy": "serial",
         "parent_id": "TD-00",
         "priority": 40,
         "result": null,
         "result_policy_json": "{\"allowed_dispositions\": [\"validated\", \"failed\"]}",
-        "revision": 2,
+        "revision": 4,
         "status": "planned",
         "tags_json": "[]",
         "title": "Cross-milestone validation, testing, and documentation",
-        "updated_at": "2026-08-28T08:10:30Z",
-        "version": 1
+        "updated_at": "2026-08-28T08:25:36Z",
+        "version": 3
       }
     ],
     "workflow_context_fragments": [
@@ -1216,6 +1314,22 @@
         "superseded_by": null,
         "task_id": null,
         "version": 1
+      },
+      {
+        "content_hash": "a190159bbde4daf9efcded8a0cd4bb6da78fb5abfd755daefb4924c6d605e0bd",
+        "content_json": "{\"current_preferences_not_frozen_contracts\":[\"Python 3.12+\",\"Textual\",\"asyncio where useful\",\"src package layout\",\"pytest\",\"ruff\",\"POSIX first\",\"UTF-8\"],\"established\":[\"txtDesk is a portable host-agnostic terminal desktop.\",\"External and machine-specific semantics belong to applications/providers.\",\"Embedded terminal panes require a mature VT state engine in addition to PTYs.\",\"The plugin boundary remains intentionally unstabilized.\"]}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:decision_ledger:-:-:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "decision_ledger",
+        "lane_id": null,
+        "owner_scope_json": "{\"run_id\":\"TXTDESK-ROADMAP\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": null,
+        "version": 2
       },
       {
         "content_hash": "ec1a873f098ff344128734f83a9dd355668945ba1b1c3d7b8e8a1417a87cbde0",
@@ -1282,6 +1396,22 @@
         "version": 1
       },
       {
+        "content_hash": "3a930baca0d9c8c6ed88e1d6941b49c6f76fbf11558b118fd2d6b5ebe5d7d641",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Validate package entry points, Textual startup, resize, shutdown, failure cleanup, graceful degradation, representative TERM configurations, and SSH-like sessions.\",\"scope\":{\"read_paths\":[\"src/txtdesk\",\"pyproject.toml\",\"tests\",\"docs\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M1-CAPABILITIES:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M1-CAPABILITIES\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M1-CAPABILITIES",
+        "version": 2
+      },
+      {
         "content_hash": "0c48929aeda788237cdb9156bc580816001d5d63465ff37632daa10bc3ac8775",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Add basic keyboard dispatch and global commands without coupling input events to application-specific semantics.\",\"objective\":\"Add basic keyboard dispatch and global commands without coupling input events to application-specific semantics.\",\"scope\":{\"exclusive_paths\":[\"src\",\"include/txtdesk\",\"tests\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1296,6 +1426,22 @@
         "superseded_by": null,
         "task_id": "TD-M1-INPUT",
         "version": 1
+      },
+      {
+        "content_hash": "dab7239d450133141035434809774b7ff8abd8110377e11e8a643d4b7d3a1310",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Add basic keyboard dispatch and global commands without coupling input events to application-specific semantics.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M1-INPUT:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M1-INPUT\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M1-INPUT",
+        "version": 2
       },
       {
         "content_hash": "d08b2790c3f12eb752fff4955df58fa4489823f38828166c60906f7c46d3fc92",
@@ -1314,6 +1460,22 @@
         "version": 1
       },
       {
+        "content_hash": "05e373a631959c51cd8a4fdeb625c4a0428bda9966b546fd75de4a784af6a953",
+        "content_json": "{\"forbidden_mutations\":[],\"next_action\":\"Implement the smallest Textual-based desktop composition; do not add embedded terminal panes or a framework beneath Textual.\",\"objective\":\"Build the smallest real txtDesk composition above Textual with clean startup and exit, resize behavior, minimal chrome, global commands, and one simple surface.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk\",\"pyproject.toml\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M1-RUNTIME:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M1-RUNTIME\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M1-RUNTIME",
+        "version": 2
+      },
+      {
         "content_hash": "1bd8d276424c18e6a3b1a88ba2c8c9089019941d174b2d97b789d5c67c42f085",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Introduce the smallest useful surface lifecycle and render contract, with one simple built-in surface and no stable plugin ABI.\",\"objective\":\"Introduce the smallest useful surface lifecycle and render contract, with one simple built-in surface and no stable plugin ABI.\",\"scope\":{\"exclusive_paths\":[\"src\",\"include/txtdesk\",\"apps\",\"tests\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1328,6 +1490,22 @@
         "superseded_by": null,
         "task_id": "TD-M1-SURFACES",
         "version": 1
+      },
+      {
+        "content_hash": "fc6b5f994fb4268bb8ad3dbd672fb2a099bbc361f3a9c00a6d740e2b967021f3",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Establish txtDesk desktop chrome and surface registration using Textual primitives, with no stable plugin API or speculative base-class hierarchy.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M1-SURFACES:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M1-SURFACES\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M1-SURFACES",
+        "version": 2
       },
       {
         "content_hash": "2b603fd96b2140ae61d21c74da266c7b799ff21802439e998b5d43aba20c47d6",
@@ -1346,6 +1524,22 @@
         "version": 1
       },
       {
+        "content_hash": "5d07fdb64f5c0d17a93924ce7ad0bf8d287bec16f01fcb130f29fd9566e4f3a9",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Build small filesystem, process, and status surfaces that exercise composition without embedding host-specific collection policy in the core.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/surfaces\",\"src/txtdesk/providers\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M2-BASIC-APPS:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M2-BASIC-APPS\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M2-BASIC-APPS",
+        "version": 2
+      },
+      {
         "content_hash": "6c4c473966931efa1dab06d60899b5c21d7a2b08857dc8c57164636f5b639e61",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Add portable configuration and keybinding behavior based on actual desktop command needs.\",\"objective\":\"Add portable configuration and keybinding behavior based on actual desktop command needs.\",\"scope\":{\"exclusive_paths\":[\"src\",\"include/txtdesk\",\"tests\",\"docs\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1360,6 +1554,22 @@
         "superseded_by": null,
         "task_id": "TD-M2-CONFIG",
         "version": 1
+      },
+      {
+        "content_hash": "01e9e0fc46afdc4a64b4f1bf67743702a4d95ec666485b9b8033f621d13146e7",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Add portable configuration and keybinding behavior based on actual desktop command needs.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/core\",\"docs\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M2-CONFIG:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M2-CONFIG\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M2-CONFIG",
+        "version": 2
       },
       {
         "content_hash": "ae9f8cd228314182a84775e224ee7f1701ea8a95749c14223dba33514a52b17f",
@@ -1378,6 +1588,22 @@
         "version": 1
       },
       {
+        "content_hash": "d2961fdff9d3df98293f4160ef34e9af5c4b573229a509623557414dcb425896",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Provide a coherent launcher or command palette for built-in applications and desktop commands.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/surfaces\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M2-LAUNCHER:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M2-LAUNCHER\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M2-LAUNCHER",
+        "version": 2
+      },
+      {
         "content_hash": "c6ec1626720c1160c52ddd7f10f7d1ac5a36f15cea953580bafdde4c00d43945",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.\",\"objective\":\"Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.\",\"scope\":{\"exclusive_paths\":[\"src\",\"include/txtdesk\",\"tests\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1392,6 +1618,22 @@
         "superseded_by": null,
         "task_id": "TD-M2-LAYOUT",
         "version": 1
+      },
+      {
+        "content_hash": "0bfb30d65e81b7a905dd4bdc7a11e306430fb091fe274ff4263caa704edd0fc0",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/core\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M2-LAYOUT:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M2-LAYOUT\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M2-LAYOUT",
+        "version": 2
       },
       {
         "content_hash": "12b455df3e08ab549b6a31a3c752ad0d2d29e488797829d941292285c276d3f8",
@@ -1410,6 +1652,22 @@
         "version": 1
       },
       {
+        "content_hash": "207902a392e22be6c6b44101a7b2ea1da154a544b1aa02fb3fb189784d615486",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Evaluate and integrate a mature Python-accessible terminal-state engine or contained native binding with PTY lifecycle, screen buffers, rendering, input forwarding, resize propagation, and interactive shells.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/surfaces\",\"src/txtdesk/providers\",\"pyproject.toml\",\"tests\",\"docs\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M3-TERMINAL:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M3-TERMINAL\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M3-TERMINAL",
+        "version": 2
+      },
+      {
         "content_hash": "c8d0a633827a2786de27fa3a8a04aac624b96fe76186357ac542ff6b1ff1269f",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.\",\"objective\":\"Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.\",\"scope\":{\"exclusive_paths\":[\"apps\",\"src\",\"include/txtdesk\",\"tests\",\"docs\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1424,6 +1682,22 @@
         "superseded_by": null,
         "task_id": "TD-M4-CODEX",
         "version": 1
+      },
+      {
+        "content_hash": "868f5cc63ca5cedcc66bf76dfe5620714ec88c3439efd78a689407d3b2606492",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/surfaces/codex\",\"src/txtdesk/providers/codex\",\"tests\",\"docs\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M4-CODEX:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M4-CODEX\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M4-CODEX",
+        "version": 2
       },
       {
         "content_hash": "f70293ffbee909b2a09d1cb89332ae2b0a1a2ca594e7fdb84156559bfa860eff",
@@ -1442,6 +1716,22 @@
         "version": 1
       },
       {
+        "content_hash": "f0a75587c7f8161f50ed43f36f69a56e27fc2a288aa9a2f4963eb5d18ded064a",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Expose Project Control through an application and provider without transferring Project Control semantics into the desktop core.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/surfaces/project_control\",\"src/txtdesk/providers/project_control\",\"tests\",\"docs\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M4-PROJECT-CONTROL:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M4-PROJECT-CONTROL\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M4-PROJECT-CONTROL",
+        "version": 2
+      },
+      {
         "content_hash": "7f77c40c153be80ac6bd3365931069987e76e43a7b927c37e945661fef556d9f",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.\",\"objective\":\"Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.\",\"scope\":{\"exclusive_paths\":[\"apps\",\"src\",\"include/txtdesk\",\"tests\",\"docs\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1456,6 +1746,22 @@
         "superseded_by": null,
         "task_id": "TD-M4-TELEMETRY",
         "version": 1
+      },
+      {
+        "content_hash": "b6b14475ada8b4a2e221ee091f5a33cebb6423b062625fa2900b19d56dee3227",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/surfaces/telemetry\",\"src/txtdesk/providers/telemetry\",\"tests\",\"docs\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M4-TELEMETRY:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M4-TELEMETRY\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M4-TELEMETRY",
+        "version": 2
       },
       {
         "content_hash": "16808e1098d41996a85110f4a199569492cba013dadad1c233ccde0c16af7e59",
@@ -1474,6 +1780,22 @@
         "version": 1
       },
       {
+        "content_hash": "aabd2419104c52c7c390835ac317ac8715d4d9d06b72b653a59942ba558f580f",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Build optional edge applications and profiles for the iMac, server power, IPMI, IoT mains, Tailscale-aware management, and other deployment-specific needs.\",\"scope\":{\"exclusive_paths\":[\"src/txtdesk/profiles\",\"src/txtdesk/providers/control\",\"docs\",\"tests\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-M5-HOST-CONTROL:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-M5-HOST-CONTROL\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-M5-HOST-CONTROL",
+        "version": 2
+      },
+      {
         "content_hash": "481a96c08f089227a402a0a36e8621d0d3f3464ecc748f78ab4017051a25af33",
         "content_json": "{\"completion_contract\":null,\"forbidden_mutations\":[],\"gates\":[],\"next_action\":\"Validate architecture boundaries, portability, terminal safety, tests, and user/developer documentation across the delivered project.\",\"objective\":\"Validate architecture boundaries, portability, terminal safety, tests, and user/developer documentation across the delivered project.\",\"scope\":{\"read_paths\":[\"src\",\"include/txtdesk\",\"apps\",\"tests\",\"docs\",\"README.md\",\"AGENTS.md\",\"CMakeLists.txt\"]},\"tests\":[]}",
         "created_at": "2026-08-28T08:10:30Z",
@@ -1488,6 +1810,22 @@
         "superseded_by": null,
         "task_id": "TD-VALIDATION-DOCS",
         "version": 1
+      },
+      {
+        "content_hash": "11af4173d35a45e86c836ba2d706847026817079901a336a1ab17d55b3b2887b",
+        "content_json": "{\"forbidden_mutations\":[],\"objective\":\"Validate architecture boundaries, portability, terminal safety, tests, packaging, and user/developer documentation across the delivered project.\",\"scope\":{\"read_paths\":[\"src/txtdesk\",\"tests\",\"docs\",\"README.md\",\"AGENTS.md\",\"pyproject.toml\"]}}",
+        "created_at": "2026-08-28T08:25:07Z",
+        "creation_revision": 3,
+        "id": "TXTDESK-ROADMAP:task_brief:TXTDESK-MAIN:TD-VALIDATION-DOCS:2",
+        "invalidated_at": null,
+        "invalidation_revision": null,
+        "kind": "task_brief",
+        "lane_id": "TXTDESK-MAIN",
+        "owner_scope_json": "{\"lane_id\":\"TXTDESK-MAIN\",\"run_id\":\"TXTDESK-ROADMAP\",\"task_id\":\"TD-VALIDATION-DOCS\"}",
+        "run_id": "TXTDESK-ROADMAP",
+        "superseded_by": null,
+        "task_id": "TD-VALIDATION-DOCS",
+        "version": 2
       }
     ],
     "workflow_integration_queue": [],
@@ -1498,7 +1836,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 0,
-        "revision": 2,
+        "revision": 4,
         "state": "completed",
         "task_id": "TD-M0-FOUNDATION"
       },
@@ -1508,7 +1846,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 1,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M1-RUNTIME"
       },
@@ -1518,7 +1856,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 2,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M1-SURFACES"
       },
@@ -1528,7 +1866,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 3,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M1-INPUT"
       },
@@ -1538,7 +1876,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 4,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M1-CAPABILITIES"
       },
@@ -1548,7 +1886,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 5,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M2-LAYOUT"
       },
@@ -1558,7 +1896,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 6,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M2-LAUNCHER"
       },
@@ -1568,7 +1906,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 7,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M2-CONFIG"
       },
@@ -1578,7 +1916,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 8,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M2-BASIC-APPS"
       },
@@ -1588,7 +1926,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 9,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M3-TERMINAL"
       },
@@ -1598,7 +1936,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 10,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M4-PROJECT-CONTROL"
       },
@@ -1608,7 +1946,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 11,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M4-CODEX"
       },
@@ -1618,7 +1956,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 12,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M4-TELEMETRY"
       },
@@ -1628,7 +1966,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 13,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-M5-HOST-CONTROL"
       },
@@ -1638,7 +1976,7 @@
         "enqueued_at": "2026-08-28T08:10:30Z",
         "lane_id": "TXTDESK-MAIN",
         "position": 14,
-        "revision": 2,
+        "revision": 4,
         "state": "queued",
         "task_id": "TD-VALIDATION-DOCS"
       }
@@ -1649,11 +1987,11 @@
         "created_at": "2026-08-28T08:10:30Z",
         "id": "TXTDESK-MAIN",
         "parent_lane_id": null,
-        "revision": 2,
+        "revision": 4,
         "role": "implementer",
         "run_id": "TXTDESK-ROADMAP",
         "state": "ready",
-        "updated_at": "2026-08-28T08:10:30Z",
+        "updated_at": "2026-08-28T08:25:36Z",
         "workspace_mode": "exclusive"
       }
     ],

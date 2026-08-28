@@ -13,13 +13,14 @@ txtDesk does not establish the SSH connection.
 - commands and keybindings;
 - configuration;
 - an eventual embedded terminal application; and
-- eventual pluggable applications and integrations.
+- eventual registerable applications and integrations.
 
 ## Three distinct concerns
 
-**txtDesk core** provides generic terminal/runtime and desktop behavior:
-screen ownership, rendering, layout, focus, input, commands, configuration,
-surface lifecycle, and clean shutdown.
+**txtDesk core** provides generic desktop behavior above the chosen terminal UI
+substrate: application lifecycle, desktop composition, focus policy, global
+commands, shared configuration, common chrome, registration, genuinely shared
+state, and clean shutdown.
 
 **Applications and providers** use those facilities to present shells, files,
 processes, status, development tools, external services, or control surfaces.

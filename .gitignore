@@ -1,25 +1,14 @@
-# CMake build trees and generated files
+# Python environments, caches, and build output
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
 /build/
-/build-*/
-/cmake-build-*/
-/out/
-CMakeCache.txt
-CMakeFiles/
-CTestTestfile.cmake
-cmake_install.cmake
-compile_commands.json
-Makefile
-Testing/
-
-# Compiler and linker output
-*.o
-*.obj
-*.a
-*.so
-*.so.*
-*.dylib
-*.dll
-*.exe
+/dist/
 
 # Todo-orchestrator live database and locks. Durable JSON projections are tracked.
 /.todo-orchestrator/state.sqlite3

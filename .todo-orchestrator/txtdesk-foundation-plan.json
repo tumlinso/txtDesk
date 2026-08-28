@@ -28,6 +28,16 @@
       "id": "no-premature-plugin-abi",
       "rule": "Do not stabilize a plugin ABI until multiple working applications provide evidence for the required extension boundary.",
       "severity": "warning"
+    },
+    {
+      "id": "python-default",
+      "rule": "Python 3.12 or newer is the default implementation substrate; native extensions require a demonstrated low-level or performance need.",
+      "severity": "error"
+    },
+    {
+      "id": "use-textual-primitives",
+      "rule": "Use Textual as the current TUI foundation and do not build a redundant widget, layout, focus, or event framework underneath it.",
+      "severity": "error"
     }
   ],
   "decisions": [
@@ -48,6 +58,18 @@
       "title": "Plugin ABI timing",
       "value": "deferred-until-real-applications",
       "allowed": ["deferred-until-real-applications"]
+    },
+    {
+      "id": "default-language",
+      "title": "Default implementation language",
+      "value": "python-3.12-plus",
+      "allowed": ["python-3.12-plus"]
+    },
+    {
+      "id": "tui-foundation",
+      "title": "Current TUI foundation",
+      "value": "textual-preferred-no-parallel-framework",
+      "allowed": ["textual-preferred-no-parallel-framework"]
     }
   ],
   "locks": [],
@@ -63,48 +85,48 @@
       "status": "planned",
       "priority": 100,
       "parallel_policy": "serial",
-      "invariants": ["host-agnostic-core", "applications-own-integrations", "terminal-restoration", "real-terminal-emulation", "no-premature-plugin-abi"]
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "terminal-restoration", "real-terminal-emulation", "no-premature-plugin-abi", "python-default", "use-textual-primitives"]
     },
     {
       "id": "TD-M0-FOUNDATION",
       "parent_id": "TD-00",
       "kind": "task",
       "title": "Repository foundation",
-      "objective": "Establish identity, documentation, agent guidance, build skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.",
+      "objective": "Establish identity, documentation, agent guidance, a Python package skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.",
       "status": "done",
       "result": "validated",
       "priority": 99,
       "parallel_policy": "project_exclusive",
       "scope": {
-        "exclusive_paths": ["AGENTS.md", "README.md", "CMakeLists.txt", ".gitignore", "docs", "src/main.cc", "include", "apps", "tests", ".todo-orchestrator"]
+        "exclusive_paths": ["AGENTS.md", "README.md", "pyproject.toml", ".gitignore", "docs", "src/txtdesk", "tests", ".todo-orchestrator"]
       },
-      "invariants": ["host-agnostic-core", "applications-own-integrations", "real-terminal-emulation", "no-premature-plugin-abi"],
-      "notes": "Completed by the bounded bootstrap pass. The executable remains a placeholder and no M1 runtime behavior is implemented."
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "real-terminal-emulation", "no-premature-plugin-abi", "python-default", "use-textual-primitives"],
+      "notes": "Completed by the bounded bootstrap and corrective Python-foundation pass. The console entry point remains a placeholder and no M1 desktop behavior is implemented."
     },
     {
       "id": "TD-M1-RUNTIME",
       "parent_id": "TD-00",
       "kind": "workstream",
-      "title": "Minimal terminal/runtime shell",
-      "objective": "Implement terminal initialization and RAII restoration, capability-aware screen setup, resize handling, an event loop, and minimal desktop chrome.",
+      "title": "Minimal Textual application shell",
+      "objective": "Build the smallest real txtDesk composition above Textual with clean startup and exit, resize behavior, minimal chrome, global commands, and one simple surface.",
       "priority": 90,
       "parallel_policy": "serial",
       "depends_on": [{"type": "task", "task_id": "TD-M0-FOUNDATION"}],
-      "scope": {"exclusive_paths": ["src", "include/txtdesk", "CMakeLists.txt", "tests"]},
-      "invariants": ["host-agnostic-core", "terminal-restoration"],
-      "next_action": "Select the lightweight terminal substrate and implement the smallest safely restoring runtime shell; do not add embedded terminal panes."
+      "scope": {"exclusive_paths": ["src/txtdesk", "pyproject.toml", "tests"]},
+      "invariants": ["host-agnostic-core", "terminal-restoration", "python-default", "use-textual-primitives"],
+      "next_action": "Implement the smallest Textual-based desktop composition; do not add embedded terminal panes or a framework beneath Textual."
     },
     {
       "id": "TD-M1-SURFACES",
       "parent_id": "TD-00",
       "kind": "workstream",
       "title": "Desktop surface and application model",
-      "objective": "Introduce the smallest useful surface lifecycle and render contract, with one simple built-in surface and no stable plugin ABI.",
+      "objective": "Establish txtDesk desktop chrome and surface registration using Textual primitives, with no stable plugin API or speculative base-class hierarchy.",
       "priority": 89,
       "parallel_policy": "serial",
       "depends_on": [{"type": "task", "task_id": "TD-M1-RUNTIME"}],
-      "scope": {"exclusive_paths": ["src", "include/txtdesk", "apps", "tests"]},
-      "invariants": ["host-agnostic-core", "applications-own-integrations", "no-premature-plugin-abi"]
+      "scope": {"exclusive_paths": ["src/txtdesk", "tests"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "no-premature-plugin-abi", "python-default", "use-textual-primitives"]
     },
     {
       "id": "TD-M1-INPUT",
@@ -115,20 +137,20 @@
       "priority": 88,
       "parallel_policy": "serial",
       "depends_on": [{"type": "task", "task_id": "TD-M1-SURFACES"}],
-      "scope": {"exclusive_paths": ["src", "include/txtdesk", "tests"]},
-      "invariants": ["host-agnostic-core"]
+      "scope": {"exclusive_paths": ["src/txtdesk", "tests"]},
+      "invariants": ["host-agnostic-core", "python-default", "use-textual-primitives"]
     },
     {
       "id": "TD-M1-CAPABILITIES",
       "parent_id": "TD-00",
       "kind": "validation_task",
-      "title": "Terminal capability and restoration validation",
-      "objective": "Validate startup, graceful degradation, resize, shutdown, and restoration across representative TERM configurations and SSH-like sessions.",
+      "title": "Textual shell and terminal compatibility validation",
+      "objective": "Validate package entry points, Textual startup, resize, shutdown, failure cleanup, graceful degradation, representative TERM configurations, and SSH-like sessions.",
       "priority": 87,
       "parallel_policy": "serial",
       "depends_on": [{"type": "task", "task_id": "TD-M1-INPUT"}],
-      "scope": {"read_paths": ["src", "include/txtdesk", "tests", "docs"]},
-      "invariants": ["terminal-restoration"],
+      "scope": {"read_paths": ["src/txtdesk", "pyproject.toml", "tests", "docs"]},
+      "invariants": ["terminal-restoration", "python-default", "use-textual-primitives"],
       "result_policy": {"allowed_dispositions": ["validated", "failed"]}
     },
     {
@@ -138,10 +160,10 @@
       "title": "Layout and focus composition",
       "objective": "Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.",
       "priority": 80,
-      "parallel_policy": "serial",
+      "parallel_policy": "parallel_safe",
       "depends_on": [{"type": "task", "task_id": "TD-M1-CAPABILITIES"}],
-      "scope": {"exclusive_paths": ["src", "include/txtdesk", "tests"]},
-      "invariants": ["host-agnostic-core"]
+      "scope": {"exclusive_paths": ["src/txtdesk/core", "tests"]},
+      "invariants": ["host-agnostic-core", "use-textual-primitives"]
     },
     {
       "id": "TD-M2-LAUNCHER",
@@ -150,10 +172,10 @@
       "title": "Command palette and application launcher",
       "objective": "Provide a coherent launcher or command palette for built-in applications and desktop commands.",
       "priority": 79,
-      "parallel_policy": "serial",
+      "parallel_policy": "parallel_safe",
       "depends_on": [{"type": "task", "task_id": "TD-M2-LAYOUT"}],
-      "scope": {"exclusive_paths": ["src", "include/txtdesk", "apps", "tests"]},
-      "invariants": ["host-agnostic-core", "no-premature-plugin-abi"]
+      "scope": {"exclusive_paths": ["src/txtdesk/surfaces", "tests"]},
+      "invariants": ["host-agnostic-core", "no-premature-plugin-abi", "use-textual-primitives"]
     },
     {
       "id": "TD-M2-CONFIG",
@@ -162,34 +184,34 @@
       "title": "Configuration and keybindings",
       "objective": "Add portable configuration and keybinding behavior based on actual desktop command needs.",
       "priority": 78,
-      "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M2-LAUNCHER"}],
-      "scope": {"exclusive_paths": ["src", "include/txtdesk", "tests", "docs"]},
-      "invariants": ["host-agnostic-core"]
+      "parallel_policy": "parallel_safe",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-LAYOUT"}],
+      "scope": {"exclusive_paths": ["src/txtdesk/core", "docs", "tests"]},
+      "invariants": ["host-agnostic-core", "python-default"]
     },
     {
       "id": "TD-M2-BASIC-APPS",
       "parent_id": "TD-00",
       "kind": "workstream",
       "title": "Basic filesystem, process, and status applications",
-      "objective": "Build small native applications that exercise the surface model without embedding host-specific collection policy in the core.",
+      "objective": "Build small filesystem, process, and status surfaces that exercise composition without embedding host-specific collection policy in the core.",
       "priority": 77,
       "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M2-CONFIG"}],
-      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests"]},
-      "invariants": ["applications-own-integrations", "no-premature-plugin-abi"]
+      "depends_on": [{"type": "task", "task_id": "TD-M2-LAUNCHER"}, {"type": "task", "task_id": "TD-M2-CONFIG"}],
+      "scope": {"exclusive_paths": ["src/txtdesk/surfaces", "src/txtdesk/providers", "tests"]},
+      "invariants": ["applications-own-integrations", "no-premature-plugin-abi", "python-default", "use-textual-primitives"]
     },
     {
       "id": "TD-M3-TERMINAL",
       "parent_id": "TD-00",
       "kind": "workstream",
       "title": "Embedded terminal application and VT engine integration",
-      "objective": "Deliberately select and integrate a mature VT state engine with PTY ownership, resize propagation, interactive shells, and multiple terminal panes.",
+      "objective": "Evaluate and integrate a mature Python-accessible terminal-state engine or contained native binding with PTY lifecycle, screen buffers, rendering, input forwarding, resize propagation, and interactive shells.",
       "priority": 70,
       "parallel_policy": "serial",
       "depends_on": [{"type": "task", "task_id": "TD-M2-BASIC-APPS"}],
-      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "CMakeLists.txt", "tests", "docs"]},
-      "invariants": ["terminal-restoration", "real-terminal-emulation", "applications-own-integrations"]
+      "scope": {"exclusive_paths": ["src/txtdesk/surfaces", "src/txtdesk/providers", "pyproject.toml", "tests", "docs"]},
+      "invariants": ["terminal-restoration", "real-terminal-emulation", "applications-own-integrations", "python-default", "use-textual-primitives"]
     },
     {
       "id": "TD-M4-PROJECT-CONTROL",
@@ -198,9 +220,9 @@
       "title": "Project Control application/provider",
       "objective": "Expose Project Control through an application and provider without transferring Project Control semantics into the desktop core.",
       "priority": 60,
-      "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M3-TERMINAL"}],
-      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests", "docs"]},
+      "parallel_policy": "parallel_safe",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-BASIC-APPS"}],
+      "scope": {"exclusive_paths": ["src/txtdesk/surfaces/project_control", "src/txtdesk/providers/project_control", "tests", "docs"]},
       "invariants": ["host-agnostic-core", "applications-own-integrations"]
     },
     {
@@ -210,9 +232,9 @@
       "title": "Codex application/provider",
       "objective": "Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.",
       "priority": 59,
-      "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M4-PROJECT-CONTROL"}],
-      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests", "docs"]},
+      "parallel_policy": "parallel_safe",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-BASIC-APPS"}],
+      "scope": {"exclusive_paths": ["src/txtdesk/surfaces/codex", "src/txtdesk/providers/codex", "tests", "docs"]},
       "invariants": ["host-agnostic-core", "applications-own-integrations"]
     },
     {
@@ -222,9 +244,9 @@
       "title": "Telemetry applications/providers",
       "objective": "Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.",
       "priority": 58,
-      "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M4-CODEX"}],
-      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests", "docs"]},
+      "parallel_policy": "parallel_safe",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-BASIC-APPS"}],
+      "scope": {"exclusive_paths": ["src/txtdesk/surfaces/telemetry", "src/txtdesk/providers/telemetry", "tests", "docs"]},
       "invariants": ["host-agnostic-core", "applications-own-integrations"]
     },
     {
@@ -235,8 +257,8 @@
       "objective": "Build optional edge applications and profiles for the iMac, server power, IPMI, IoT mains, Tailscale-aware management, and other deployment-specific needs.",
       "priority": 50,
       "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M4-TELEMETRY"}],
-      "scope": {"exclusive_paths": ["apps", "docs", "tests"]},
+      "depends_on": [{"type": "task", "task_id": "TD-M4-PROJECT-CONTROL"}, {"type": "task", "task_id": "TD-M4-CODEX"}, {"type": "task", "task_id": "TD-M4-TELEMETRY"}],
+      "scope": {"exclusive_paths": ["src/txtdesk/profiles", "src/txtdesk/providers/control", "docs", "tests"]},
       "invariants": ["host-agnostic-core", "applications-own-integrations"]
     },
     {
@@ -244,12 +266,12 @@
       "parent_id": "TD-00",
       "kind": "validation_task",
       "title": "Cross-milestone validation, testing, and documentation",
-      "objective": "Validate architecture boundaries, portability, terminal safety, tests, and user/developer documentation across the delivered project.",
+      "objective": "Validate unit tests, packaging and entry points, TUI smoke behavior, SSH and terminal compatibility, architecture boundaries, and user/developer documentation across the delivered project.",
       "priority": 40,
       "parallel_policy": "serial",
-      "depends_on": [{"type": "task", "task_id": "TD-M5-HOST-CONTROL"}],
-      "scope": {"read_paths": ["src", "include/txtdesk", "apps", "tests", "docs", "README.md", "AGENTS.md", "CMakeLists.txt"]},
-      "invariants": ["host-agnostic-core", "applications-own-integrations", "terminal-restoration", "real-terminal-emulation", "no-premature-plugin-abi"],
+      "depends_on": [{"type": "task", "task_id": "TD-M3-TERMINAL"}, {"type": "task", "task_id": "TD-M5-HOST-CONTROL"}],
+      "scope": {"read_paths": ["src/txtdesk", "tests", "docs", "README.md", "AGENTS.md", "pyproject.toml"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "terminal-restoration", "real-terminal-emulation", "no-premature-plugin-abi", "python-default", "use-textual-primitives"],
       "result_policy": {"allowed_dispositions": ["validated", "failed"]}
     }
   ],
@@ -316,7 +338,163 @@
               "Embedded terminal panes require a mature VT state engine in addition to PTYs.",
               "The plugin boundary remains intentionally unstabilized."
             ],
-            "current_preferences_not_frozen_contracts": ["C++20", "CMake", "ncursesw or equivalent", ".cc/.hh naming", "POSIX first", "UTF-8"]
+            "current_preferences_not_frozen_contracts": ["Python 3.12+", "Textual", "asyncio where useful", "src package layout", "pytest", "ruff", "POSIX first", "UTF-8"]
+          },
+          "version": 2
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M1-RUNTIME",
+          "version": 2,
+          "content": {
+            "objective": "Build the smallest real txtDesk composition above Textual with clean startup and exit, resize behavior, minimal chrome, global commands, and one simple surface.",
+            "next_action": "Implement the smallest Textual-based desktop composition; do not add embedded terminal panes or a framework beneath Textual.",
+            "scope": {"exclusive_paths": ["src/txtdesk", "pyproject.toml", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M1-SURFACES",
+          "version": 2,
+          "content": {
+            "objective": "Establish txtDesk desktop chrome and surface registration using Textual primitives, with no stable plugin API or speculative base-class hierarchy.",
+            "scope": {"exclusive_paths": ["src/txtdesk", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M1-INPUT",
+          "version": 2,
+          "content": {
+            "objective": "Add basic keyboard dispatch and global commands without coupling input events to application-specific semantics.",
+            "scope": {"exclusive_paths": ["src/txtdesk", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M1-CAPABILITIES",
+          "version": 2,
+          "content": {
+            "objective": "Validate package entry points, Textual startup, resize, shutdown, failure cleanup, graceful degradation, representative TERM configurations, and SSH-like sessions.",
+            "scope": {"read_paths": ["src/txtdesk", "pyproject.toml", "tests", "docs"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M2-LAYOUT",
+          "version": 2,
+          "content": {
+            "objective": "Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.",
+            "scope": {"exclusive_paths": ["src/txtdesk/core", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M2-LAUNCHER",
+          "version": 2,
+          "content": {
+            "objective": "Provide a coherent launcher or command palette for built-in applications and desktop commands.",
+            "scope": {"exclusive_paths": ["src/txtdesk/surfaces", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M2-CONFIG",
+          "version": 2,
+          "content": {
+            "objective": "Add portable configuration and keybinding behavior based on actual desktop command needs.",
+            "scope": {"exclusive_paths": ["src/txtdesk/core", "docs", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M2-BASIC-APPS",
+          "version": 2,
+          "content": {
+            "objective": "Build small filesystem, process, and status surfaces that exercise composition without embedding host-specific collection policy in the core.",
+            "scope": {"exclusive_paths": ["src/txtdesk/surfaces", "src/txtdesk/providers", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M3-TERMINAL",
+          "version": 2,
+          "content": {
+            "objective": "Evaluate and integrate a mature Python-accessible terminal-state engine or contained native binding with PTY lifecycle, screen buffers, rendering, input forwarding, resize propagation, and interactive shells.",
+            "scope": {"exclusive_paths": ["src/txtdesk/surfaces", "src/txtdesk/providers", "pyproject.toml", "tests", "docs"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M4-PROJECT-CONTROL",
+          "version": 2,
+          "content": {
+            "objective": "Expose Project Control through an application and provider without transferring Project Control semantics into the desktop core.",
+            "scope": {"exclusive_paths": ["src/txtdesk/surfaces/project_control", "src/txtdesk/providers/project_control", "tests", "docs"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M4-CODEX",
+          "version": 2,
+          "content": {
+            "objective": "Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.",
+            "scope": {"exclusive_paths": ["src/txtdesk/surfaces/codex", "src/txtdesk/providers/codex", "tests", "docs"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M4-TELEMETRY",
+          "version": 2,
+          "content": {
+            "objective": "Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.",
+            "scope": {"exclusive_paths": ["src/txtdesk/surfaces/telemetry", "src/txtdesk/providers/telemetry", "tests", "docs"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-M5-HOST-CONTROL",
+          "version": 2,
+          "content": {
+            "objective": "Build optional edge applications and profiles for the iMac, server power, IPMI, IoT mains, Tailscale-aware management, and other deployment-specific needs.",
+            "scope": {"exclusive_paths": ["src/txtdesk/profiles", "src/txtdesk/providers/control", "docs", "tests"]},
+            "forbidden_mutations": []
+          }
+        },
+        {
+          "kind": "task_brief",
+          "lane_id": "TXTDESK-MAIN",
+          "task_id": "TD-VALIDATION-DOCS",
+          "version": 2,
+          "content": {
+            "objective": "Validate architecture boundaries, portability, terminal safety, tests, packaging, and user/developer documentation across the delivered project.",
+            "scope": {"read_paths": ["src/txtdesk", "tests", "docs", "README.md", "AGENTS.md", "pyproject.toml"]},
+            "forbidden_mutations": []
           }
         }
       ]

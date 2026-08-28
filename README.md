@@ -2,11 +2,15 @@
 
 txtDesk is a portable text-mode desktop environment intended to run directly
 inside an ordinary Unix terminal, including a terminal reached over SSH. The
-eventual entry point is:
+intended user experience is the same locally or remotely:
 
-```text
+```sh
+ssh some-machine
 txtdesk
 ```
+
+or simply `txtdesk` in a local terminal. The host should not define the
+desktop's identity.
 
 Traditional terminal sessions tend to become one shell, a multiplexer, or a
 collection of unrelated terminal applications. txtDesk aims to provide a
@@ -25,17 +29,25 @@ of the project.
 ## Status
 
 txtDesk is in repository-bootstrap and architecture-definition phase. The
-current executable is deliberately only a compileable placeholder; it is not a
+current command is deliberately only a package smoke placeholder; it is not a
 desktop implementation.
 
-The current engineering preference is C++20 with CMake and a lightweight Unix
-terminal UI substrate such as ncursesw. From a checkout with a C++20 compiler
-and CMake:
+txtDesk is Python-first: Python 3.12+ is the default implementation substrate,
+and Textual is the current preferred high-level TUI foundation. This favors
+clear, rapid development of interaction, composition, subprocess, state, and
+integration behavior over building generic terminal machinery from scratch.
+Native components remain possible when a demonstrated low-level or performance
+need justifies them.
+
+From a checkout with Python 3.12 or newer:
 
 ```sh
-cmake -S . -B build
-cmake --build build
-ctest --test-dir build --output-on-failure
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -m pip install -e '.[dev]'
+python -m txtdesk
+txtdesk
+pytest
 ```
 
 See [the architecture](docs/architecture.md), [scope](docs/scope.md),

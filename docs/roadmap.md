@@ -6,16 +6,17 @@ teaches the project where its boundaries belong.
 ## M0: Repository foundation
 
 - project identity and documentation;
-- agent guidance and build skeleton;
+- agent guidance and Python package skeleton;
 - todo workflow and Project Control visibility; and
 - initial architectural boundaries.
 
 ## M1: Minimal desktop shell
 
-Build a small runnable `txtdesk` that initializes and reliably restores the
-terminal, handles resize, draws simple desktop chrome, dispatches basic
-keyboard commands, and hosts at least one simple built-in surface behind a
-minimal surface abstraction.
+Build the smallest real txtDesk composition above Textual: the application
+starts and exits cleanly, resize works naturally, desktop chrome and a global
+command/input model exist, and at least one simple built-in surface is usable.
+Failure behavior and terminal cleanup must be sensible. Do not introduce a
+parallel widget or event framework.
 
 ## M2: Desktop composition
 
@@ -28,7 +29,7 @@ minimal surface abstraction.
 ## M3: Real terminal application
 
 - PTY process ownership;
-- a mature VT terminal-state engine;
+- deliberate evaluation and integration of a mature terminal-state engine;
 - an embedded interactive shell;
 - resize propagation; and
 - multiple terminal panes.
