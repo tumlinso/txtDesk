@@ -1,0 +1,28 @@
+# CMake build trees and generated files
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+cmake_install.cmake
+compile_commands.json
+Makefile
+Testing/
+
+# Compiler and linker output
+*.o
+*.obj
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+
+# Todo-orchestrator live database and locks. Durable JSON projections are tracked.
+/.todo-orchestrator/state.sqlite3
+/.todo-orchestrator/*.sqlite3-shm
+/.todo-orchestrator/*.sqlite3-wal
+/.todo-orchestrator/*.lock

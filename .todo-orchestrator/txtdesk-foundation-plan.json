@@ -1,0 +1,325 @@
+{
+  "schema_version": 3,
+  "project": {
+    "name": "txtDesk"
+  },
+  "invariants": [
+    {
+      "id": "host-agnostic-core",
+      "rule": "Core desktop abstractions remain independent of any specific machine, SSH topology, control backend, or deployment profile.",
+      "severity": "error"
+    },
+    {
+      "id": "applications-own-integrations",
+      "rule": "Project Control, Codex, telemetry, remote control, and host-specific semantics stay behind application or provider boundaries.",
+      "severity": "error"
+    },
+    {
+      "id": "terminal-restoration",
+      "rule": "Terminal initialization has explicit ownership and restoration on normal and handled-error exits; terminal corruption is a serious defect.",
+      "severity": "error"
+    },
+    {
+      "id": "real-terminal-emulation",
+      "rule": "An embedded interactive pane requires a mature VT terminal-state engine; a PTY alone is not an embedded terminal and txtDesk does not invent a fake emulator.",
+      "severity": "error"
+    },
+    {
+      "id": "no-premature-plugin-abi",
+      "rule": "Do not stabilize a plugin ABI until multiple working applications provide evidence for the required extension boundary.",
+      "severity": "warning"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "core-identity",
+      "title": "Core identity",
+      "value": "portable-host-agnostic-terminal-desktop",
+      "allowed": ["portable-host-agnostic-terminal-desktop"]
+    },
+    {
+      "id": "embedded-terminal-strategy",
+      "title": "Embedded terminal strategy",
+      "value": "evaluate-mature-vt-engine-before-embedding",
+      "allowed": ["evaluate-mature-vt-engine-before-embedding"]
+    },
+    {
+      "id": "plugin-abi-timing",
+      "title": "Plugin ABI timing",
+      "value": "deferred-until-real-applications",
+      "allowed": ["deferred-until-real-applications"]
+    }
+  ],
+  "locks": [],
+  "interfaces": [],
+  "barriers": [],
+  "resource_classes": [],
+  "tasks": [
+    {
+      "id": "TD-00",
+      "kind": "epic",
+      "title": "txtDesk portable terminal desktop",
+      "objective": "Deliver a portable host-agnostic text-mode desktop through restrained milestones.",
+      "status": "planned",
+      "priority": 100,
+      "parallel_policy": "serial",
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "terminal-restoration", "real-terminal-emulation", "no-premature-plugin-abi"]
+    },
+    {
+      "id": "TD-M0-FOUNDATION",
+      "parent_id": "TD-00",
+      "kind": "task",
+      "title": "Repository foundation",
+      "objective": "Establish identity, documentation, agent guidance, build skeleton, authoritative workflow, and Project Control visibility without implementing the desktop.",
+      "status": "done",
+      "result": "validated",
+      "priority": 99,
+      "parallel_policy": "project_exclusive",
+      "scope": {
+        "exclusive_paths": ["AGENTS.md", "README.md", "CMakeLists.txt", ".gitignore", "docs", "src/main.cc", "include", "apps", "tests", ".todo-orchestrator"]
+      },
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "real-terminal-emulation", "no-premature-plugin-abi"],
+      "notes": "Completed by the bounded bootstrap pass. The executable remains a placeholder and no M1 runtime behavior is implemented."
+    },
+    {
+      "id": "TD-M1-RUNTIME",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Minimal terminal/runtime shell",
+      "objective": "Implement terminal initialization and RAII restoration, capability-aware screen setup, resize handling, an event loop, and minimal desktop chrome.",
+      "priority": 90,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M0-FOUNDATION"}],
+      "scope": {"exclusive_paths": ["src", "include/txtdesk", "CMakeLists.txt", "tests"]},
+      "invariants": ["host-agnostic-core", "terminal-restoration"],
+      "next_action": "Select the lightweight terminal substrate and implement the smallest safely restoring runtime shell; do not add embedded terminal panes."
+    },
+    {
+      "id": "TD-M1-SURFACES",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Desktop surface and application model",
+      "objective": "Introduce the smallest useful surface lifecycle and render contract, with one simple built-in surface and no stable plugin ABI.",
+      "priority": 89,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M1-RUNTIME"}],
+      "scope": {"exclusive_paths": ["src", "include/txtdesk", "apps", "tests"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "no-premature-plugin-abi"]
+    },
+    {
+      "id": "TD-M1-INPUT",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Input and command handling",
+      "objective": "Add basic keyboard dispatch and global commands without coupling input events to application-specific semantics.",
+      "priority": 88,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M1-SURFACES"}],
+      "scope": {"exclusive_paths": ["src", "include/txtdesk", "tests"]},
+      "invariants": ["host-agnostic-core"]
+    },
+    {
+      "id": "TD-M1-CAPABILITIES",
+      "parent_id": "TD-00",
+      "kind": "validation_task",
+      "title": "Terminal capability and restoration validation",
+      "objective": "Validate startup, graceful degradation, resize, shutdown, and restoration across representative TERM configurations and SSH-like sessions.",
+      "priority": 87,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M1-INPUT"}],
+      "scope": {"read_paths": ["src", "include/txtdesk", "tests", "docs"]},
+      "invariants": ["terminal-restoration"],
+      "result_policy": {"allowed_dispositions": ["validated", "failed"]}
+    },
+    {
+      "id": "TD-M2-LAYOUT",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Layout and focus composition",
+      "objective": "Develop evidence-backed split, tab, placement, and focus traversal behavior for multiple surfaces.",
+      "priority": 80,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M1-CAPABILITIES"}],
+      "scope": {"exclusive_paths": ["src", "include/txtdesk", "tests"]},
+      "invariants": ["host-agnostic-core"]
+    },
+    {
+      "id": "TD-M2-LAUNCHER",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Command palette and application launcher",
+      "objective": "Provide a coherent launcher or command palette for built-in applications and desktop commands.",
+      "priority": 79,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-LAYOUT"}],
+      "scope": {"exclusive_paths": ["src", "include/txtdesk", "apps", "tests"]},
+      "invariants": ["host-agnostic-core", "no-premature-plugin-abi"]
+    },
+    {
+      "id": "TD-M2-CONFIG",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Configuration and keybindings",
+      "objective": "Add portable configuration and keybinding behavior based on actual desktop command needs.",
+      "priority": 78,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-LAUNCHER"}],
+      "scope": {"exclusive_paths": ["src", "include/txtdesk", "tests", "docs"]},
+      "invariants": ["host-agnostic-core"]
+    },
+    {
+      "id": "TD-M2-BASIC-APPS",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Basic filesystem, process, and status applications",
+      "objective": "Build small native applications that exercise the surface model without embedding host-specific collection policy in the core.",
+      "priority": 77,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-CONFIG"}],
+      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests"]},
+      "invariants": ["applications-own-integrations", "no-premature-plugin-abi"]
+    },
+    {
+      "id": "TD-M3-TERMINAL",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Embedded terminal application and VT engine integration",
+      "objective": "Deliberately select and integrate a mature VT state engine with PTY ownership, resize propagation, interactive shells, and multiple terminal panes.",
+      "priority": 70,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M2-BASIC-APPS"}],
+      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "CMakeLists.txt", "tests", "docs"]},
+      "invariants": ["terminal-restoration", "real-terminal-emulation", "applications-own-integrations"]
+    },
+    {
+      "id": "TD-M4-PROJECT-CONTROL",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Project Control application/provider",
+      "objective": "Expose Project Control through an application and provider without transferring Project Control semantics into the desktop core.",
+      "priority": 60,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M3-TERMINAL"}],
+      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests", "docs"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations"]
+    },
+    {
+      "id": "TD-M4-CODEX",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Codex application/provider",
+      "objective": "Add Codex interaction as an application/provider using demonstrated integration boundaries rather than core semantics.",
+      "priority": 59,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M4-PROJECT-CONTROL"}],
+      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests", "docs"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations"]
+    },
+    {
+      "id": "TD-M4-TELEMETRY",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Telemetry applications/providers",
+      "objective": "Present GPU, CPU, network, and storage telemetry through replaceable providers without making txtDesk a monitoring library.",
+      "priority": 58,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M4-CODEX"}],
+      "scope": {"exclusive_paths": ["apps", "src", "include/txtdesk", "tests", "docs"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations"]
+    },
+    {
+      "id": "TD-M5-HOST-CONTROL",
+      "parent_id": "TD-00",
+      "kind": "workstream",
+      "title": "Host-specific deployment and control applications",
+      "objective": "Build optional edge applications and profiles for the iMac, server power, IPMI, IoT mains, Tailscale-aware management, and other deployment-specific needs.",
+      "priority": 50,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M4-TELEMETRY"}],
+      "scope": {"exclusive_paths": ["apps", "docs", "tests"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations"]
+    },
+    {
+      "id": "TD-VALIDATION-DOCS",
+      "parent_id": "TD-00",
+      "kind": "validation_task",
+      "title": "Cross-milestone validation, testing, and documentation",
+      "objective": "Validate architecture boundaries, portability, terminal safety, tests, and user/developer documentation across the delivered project.",
+      "priority": 40,
+      "parallel_policy": "serial",
+      "depends_on": [{"type": "task", "task_id": "TD-M5-HOST-CONTROL"}],
+      "scope": {"read_paths": ["src", "include/txtdesk", "apps", "tests", "docs", "README.md", "AGENTS.md", "CMakeLists.txt"]},
+      "invariants": ["host-agnostic-core", "applications-own-integrations", "terminal-restoration", "real-terminal-emulation", "no-premature-plugin-abi"],
+      "result_policy": {"allowed_dispositions": ["validated", "failed"]}
+    }
+  ],
+  "runs": [
+    {
+      "id": "TXTDESK-ROADMAP",
+      "root_task_id": "TD-00",
+      "charter": {
+        "objective": "Deliver txtDesk as a portable text-mode desktop through bounded, dependency-ordered milestones.",
+        "boundaries": [
+          "The core is host-agnostic and operates on the current terminal.",
+          "Applications and providers own external and machine-specific semantics.",
+          "No embedded terminal exists until a mature VT engine is deliberately integrated.",
+          "No stable plugin ABI exists during the early compiled-in application phase."
+        ],
+        "invariants": [
+          "Preserve terminal state and restore it reliably.",
+          "Do not turn txtDesk into SSH, Project Control, Codex, telemetry, or server-control infrastructure.",
+          "Keep early implementation small and evidence-driven."
+        ],
+        "acceptance_conditions": [
+          "Each milestone is implemented and validated only after its dependencies are complete.",
+          "Portability and SSH usability remain explicit validation concerns.",
+          "Host-specific deployments remain at the application/provider edge."
+        ],
+        "glossary": {
+          "core": "generic terminal runtime and desktop framework",
+          "application": "a user-facing surface hosted by the desktop",
+          "provider": "an adapter to external data or services",
+          "deployment": "host-specific selection and policy at the edge"
+        }
+      },
+      "lanes": [
+        {
+          "id": "TXTDESK-MAIN",
+          "role": "implementer",
+          "tasks": [
+            "TD-M0-FOUNDATION",
+            "TD-M1-RUNTIME",
+            "TD-M1-SURFACES",
+            "TD-M1-INPUT",
+            "TD-M1-CAPABILITIES",
+            "TD-M2-LAYOUT",
+            "TD-M2-LAUNCHER",
+            "TD-M2-CONFIG",
+            "TD-M2-BASIC-APPS",
+            "TD-M3-TERMINAL",
+            "TD-M4-PROJECT-CONTROL",
+            "TD-M4-CODEX",
+            "TD-M4-TELEMETRY",
+            "TD-M5-HOST-CONTROL",
+            "TD-VALIDATION-DOCS"
+          ],
+          "workspace": {"mode": "exclusive"}
+        }
+      ],
+      "context_fragments": [
+        {
+          "kind": "decision_ledger",
+          "content": {
+            "established": [
+              "txtDesk is a portable host-agnostic terminal desktop.",
+              "External and machine-specific semantics belong to applications/providers.",
+              "Embedded terminal panes require a mature VT state engine in addition to PTYs.",
+              "The plugin boundary remains intentionally unstabilized."
+            ],
+            "current_preferences_not_frozen_contracts": ["C++20", "CMake", "ncursesw or equivalent", ".cc/.hh naming", "POSIX first", "UTF-8"]
+          }
+        }
+      ]
+    }
+  ]
+}
